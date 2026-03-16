@@ -20,10 +20,16 @@ export const AppProvider = ({children} : {children: React.ReactNode}) =>{
   setUser(data.user)
   if (data?.user.age && data?.user?.weght && data?.user?.goal) {
 
-   
+   setOnboardingCompleted(true)
 
   }
 
+  localStorage.setItem('token', data.jwt)
+
+ }
+
+ const login = async (credentials: Credentials)=>{
+  
  }
 
  const value = {}

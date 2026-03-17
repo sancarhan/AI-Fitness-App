@@ -1,5 +1,5 @@
 import React, {createContext, useContext, useState} from 'react'
-import { initialState, type ActivityEntry, type Credentials, type FoodEntry } from '../types'
+import { initialState, type ActivityEntry, type Credentials, type FoodEntry, type User } from '../types'
 import { useNavigate } from 'react-router-dom'
 import mockApi from '../assets/mockApi'
 
@@ -18,10 +18,8 @@ export const AppProvider = ({children} : {children: React.ReactNode}) =>{
 
   const {data} = await mockApi.auth.register(credentials)
   setUser(data.user)
-  if (data?.user.age && data?.user?.weght && data?.user?.goal) {
-
+  if (data?.user?.age && data?.user?.weight && data?.user?.goal) {
    setOnboardingCompleted(true)
-
   }
 
   localStorage.setItem('token', data.jwt)
@@ -29,6 +27,35 @@ export const AppProvider = ({children} : {children: React.ReactNode}) =>{
  }
 
  const login = async (credentials: Credentials)=>{
+  
+  const {data } = await mockApi.auth.login(credentials)
+  setUser({...data.user, token: data.jwt})
+  if (data?.user?.age && data?.user?.weight && data?.user?.goal) {
+   setOnboardingCompleted(true)
+  }
+  localStorage.setItem('token', data.jwt)
+
+ }
+
+ const fetchUser = async (token: string)=>{
+  const { data } = await mockApi.user.me()
+  setUser({...data, token})
+   if (data?.age && data?.weight && data?.goal) {
+   setOnboardingCompleted(true)
+  }
+  setIsUserFetched(true)
+
+ }
+
+ const fetchFoodLogs = async ()=>{
+  const {data} = await mockApi.foodLogs.list()
+  setAllFoodLogs(data)
+
+ }
+
+  const fetchActivityLogs = async ()=>{
+  const {data} = await mockApi.activityLogs.list()
+  setAllActivityLogs(data)
   
  }
 

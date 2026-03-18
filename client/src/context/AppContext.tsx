@@ -1,4 +1,4 @@
-import React, {createContext, useContext, useState} from 'react'
+import React, {createContext, useContext, useEffect, useState} from 'react'
 import { initialState, type ActivityEntry, type Credentials, type FoodEntry, type User } from '../types'
 import { useNavigate } from 'react-router-dom'
 import mockApi from '../assets/mockApi'
@@ -59,7 +59,33 @@ export const AppProvider = ({children} : {children: React.ReactNode}) =>{
   
  }
 
- const value = {}
+ const logout = ()=>{
+  localStorage.removeItem('token')
+  setUser(null)
+  setOnboardingCompleted(false)
+  navigate('/')
+ }
+
+ useEffect(()=>{
+  const token = localStorage.getItem('token')
+  if (token) {
+   (async ()=>{
+    await fetchUser(token)
+    await fetchFoodLogs()
+    await fetchActivityLogs()
+   })();
+  }else{
+   setIsUserFetched(true)
+  }
+ },[])
+
+ const value = {
+  user, setUser, isUserFetched, fetchUser,
+  signup, login, logout,
+  onboardingCompleted, setOnboardingCompleted,
+  allFoodLogs, allActivityLogs,
+  setAllFoodLogs, setAllActivityLogs
+ }
 
  return <AppContext.Provider value={value}>
   {children}
@@ -68,4 +94,4 @@ export const AppProvider = ({children} : {children: React.ReactNode}) =>{
 
 
 
-export const useAppContext () => useContext(AppContext)
+export const useAppContext = () => useContext(AppContext)

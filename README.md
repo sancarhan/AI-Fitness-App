@@ -3,8 +3,6 @@
 ## Genel Bakış
 AI Fitness App, React, TypeScript, Tailwind CSS ve Vite ile geliştirilmiş modern bir web uygulamasıdır. Kullanıcılara aktivite günlüğü, yemek takibi, dashboard, kullanıcı profili ve onboarding akışları gibi kapsamlı bir fitness takip deneyimi sunar. Koyu/aydınlık tema desteği ile yumuşak geçişler içerir.
 
-
-
 ## Özellikler
 - **Dashboard**: Fitness metrikleri özeti, hızlı istatistikler ve ilerleme grafikleri
 - **Yemek Günlüğü**: Yemekler, kalori ve beslenme takibi

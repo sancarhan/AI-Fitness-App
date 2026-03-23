@@ -3,7 +3,7 @@
 const Login = () => {
   return (
     <div>
-      Login
+      Login giriş yapın
     </div>
   )
 }

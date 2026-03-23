@@ -70,9 +70,14 @@ export const AppProvider = ({children} : {children: React.ReactNode}) =>{
   const token = localStorage.getItem('token')
   if (token) {
    (async ()=>{
-    await fetchUser(token)
-    await fetchFoodLogs()
-    await fetchActivityLogs()
+    try {
+     await fetchUser(token)
+     await fetchFoodLogs()
+     await fetchActivityLogs()
+    } catch (error) {
+     console.error('Auth fetch error:', error)
+     setIsUserFetched(true)
+    }
    })();
   }else{
    setIsUserFetched(true)
